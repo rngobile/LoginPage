@@ -29,6 +29,7 @@ public class LoginServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		String nextURL;
 		//Grab Session and add to User Class
 		HttpSession session = request.getSession();
 		User user = new User();
@@ -44,9 +45,15 @@ public class LoginServlet extends HttpServlet {
 		PrintWriter out = response.getWriter();
 		out.println(user.getUserName());
 		
-		String nextURL="/home.jsp";
-		request.setAttribute("username", user.getUserName());
-		request.setAttribute("email", user.getEmail());
+		if (isValid(user.getUserName(), "password")){
+			nextURL="/home.jsp";
+			request.setAttribute("username", user.getUserName());
+			request.setAttribute("email", user.getEmail());
+		} else {
+			nextURL="/error.html";
+		}
+		
+
 		request.getRequestDispatcher(nextURL).forward(request, response);		
 	}
 
@@ -56,6 +63,14 @@ public class LoginServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		doGet(request, response);
+	}
+	
+	boolean isValid(String username,  String password){
+		if (username.equals("richard") && password.equals("password")){
+			return true;
+		}else{
+			return false;
+		}
 	}
 
 }
