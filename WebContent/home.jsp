@@ -4,17 +4,13 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>login.jsp</title>
+<title>home.jsp</title>
 </head>
 <body>
-<form action="HelloServlet" method="get">
-username: 
-<input type="text" name="username" id="username"/> <br>
-email: 
-<input type="text" name="email" id="email"/>
-<br>
-<input type="submit"/>
-</form>
+<% Object user = request.getAttribute("username"); %>
+<% Object email = request.getAttribute("email"); %>
+<h1>Hello <%=user%>!</h1>
+Your email address is: <%=email %>
 
 </body>
 </html>
