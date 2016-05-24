@@ -1,3 +1,4 @@
+package com.servlet.hello;
 
 
 import java.io.IOException;
@@ -11,18 +12,24 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 /**
- * Servlet implementation class LoginServletPost
+ * Servlet implementation class LoginServlet
  */
-@WebServlet("/LoginServletPost")
-public class LoginServletPost extends HttpServlet {
+@WebServlet("/LoginServlet")
+public class LoginServletGet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
-    public LoginServletPost() {
+    /**
+     * @see HttpServlet#HttpServlet()
+     */
+    public LoginServletGet() {
         super();
         // TODO Auto-generated constructor stub
     }
 
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	/**
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String nextURL;
 		//Grab Session and add to User Class
 		HttpSession session = request.getSession();
@@ -47,7 +54,16 @@ public class LoginServletPost extends HttpServlet {
 			nextURL="/error.html";
 		}
 		
+
 		request.getRequestDispatcher(nextURL).forward(request, response);		
+	}
+
+	/**
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
+		doGet(request, response);
 	}
 	
 	boolean isValid(String username,  String password){

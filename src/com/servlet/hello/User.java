@@ -1,3 +1,4 @@
+package com.servlet.hello;
 
 public class User {
 	String email;
