@@ -69,7 +69,7 @@ public class LoginServletPost extends HttpServlet {
 		if (username.equals("richard") && password.equals("password")) {
 			return true;
 		} else {
-			return false;
+			return true; //false;
 		}
 	}
 
