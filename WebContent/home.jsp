@@ -22,6 +22,9 @@ User u = (User) session.getAttribute("user");
 <h1>Hello <%=u.getUserName()%>!</h1>
 Your email address is: <%=u.getEmail() %>
 <br>
+<form action="newsfeed.jsp">
+<input type="submit" value="Newsfeed">
+</form>
 <form action="LoginServletPost" method="post">
 	<input type="hidden" name="action" id="action" value="logout">
 	<input type="submit" value="Logout">
