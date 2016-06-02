@@ -63,6 +63,8 @@ public class LoginServletPost extends HttpServlet {
 			}
 		}
 		request.getRequestDispatcher(nextURL).forward(request, response);
+		//show url path
+		//response.sendRedirect(request.getContextPath() + nextURL);
 	}
 
 	boolean isValid(String username, String password) {

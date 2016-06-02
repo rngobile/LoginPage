@@ -8,7 +8,8 @@
 <title>home.jsp</title>
 </head>
 <body>
-
+<jsp:include page="bootstrap.jsp"></jsp:include>
+<jsp:include page="navbar.jsp"></jsp:include>
 <!-- This was assigned from using request  
 <%Object user = request.getAttribute("username");%>
 <%Object email = request.getAttribute("email");%>
