@@ -27,6 +27,7 @@
 	Your email address is:
 	<%=u.getEmail()%>
 	<br>
+<!-- Manual buttons to navigate pages 
 	<form action="newsfeed.jsp">
 		<input type="submit" value="Newsfeed">
 	</form>
@@ -34,5 +35,6 @@
 		<input type="hidden" name="action" id="action" value="logout">
 		<input type="submit" value="Logout">
 	</form>
+-->
 </body>
 </html>
