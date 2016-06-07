@@ -2,8 +2,8 @@ package model;
 
 import java.io.Serializable;
 import javax.persistence.*;
-import java.math.BigDecimal;
 import java.util.Date;
+import java.util.List;
 
 
 /**
@@ -15,7 +15,8 @@ import java.util.Date;
 public class Bhuser implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	private BigDecimal bhuserid;
+	@Id
+	private long bhuserid;
 
 	@Temporal(TemporalType.DATE)
 	private Date joindate;
@@ -28,14 +29,18 @@ public class Bhuser implements Serializable {
 
 	private String userpassword;
 
+	//bi-directional many-to-one association to Bhpost
+	@OneToMany(mappedBy="bhuser")
+	private List<Bhpost> bhposts;
+
 	public Bhuser() {
 	}
 
-	public BigDecimal getBhuserid() {
+	public long getBhuserid() {
 		return this.bhuserid;
 	}
 
-	public void setBhuserid(BigDecimal bhuserid) {
+	public void setBhuserid(long bhuserid) {
 		this.bhuserid = bhuserid;
 	}
 
@@ -77,6 +82,28 @@ public class Bhuser implements Serializable {
 
 	public void setUserpassword(String userpassword) {
 		this.userpassword = userpassword;
+	}
+
+	public List<Bhpost> getBhposts() {
+		return this.bhposts;
+	}
+
+	public void setBhposts(List<Bhpost> bhposts) {
+		this.bhposts = bhposts;
+	}
+
+	public Bhpost addBhpost(Bhpost bhpost) {
+		getBhposts().add(bhpost);
+		bhpost.setBhuser(this);
+
+		return bhpost;
+	}
+
+	public Bhpost removeBhpost(Bhpost bhpost) {
+		getBhposts().remove(bhpost);
+		bhpost.setBhuser(null);
+
+		return bhpost;
 	}
 
 }

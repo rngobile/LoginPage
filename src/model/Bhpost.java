@@ -2,7 +2,6 @@ package model;
 
 import java.io.Serializable;
 import javax.persistence.*;
-import java.math.BigDecimal;
 import java.util.Date;
 
 
@@ -15,19 +14,28 @@ import java.util.Date;
 public class Bhpost implements Serializable {
 	private static final long serialVersionUID = 1L;
 
+	@Id
+	private long postid;
+
 	@Temporal(TemporalType.DATE)
 	private Date postdate;
-
-	private BigDecimal postid;
 
 	private String posttext;
 
 	//bi-directional many-to-one association to Bhuser
 	@ManyToOne
-	@JoinColumn(name="BHUSERID", referencedColumnName="BHUSERID")
+	@JoinColumn(name="BHUSERID")
 	private Bhuser bhuser;
 
 	public Bhpost() {
+	}
+
+	public long getPostid() {
+		return this.postid;
+	}
+
+	public void setPostid(long postid) {
+		this.postid = postid;
 	}
 
 	public Date getPostdate() {
@@ -36,14 +44,6 @@ public class Bhpost implements Serializable {
 
 	public void setPostdate(Date postdate) {
 		this.postdate = postdate;
-	}
-
-	public BigDecimal getPostid() {
-		return this.postid;
-	}
-
-	public void setPostid(BigDecimal postid) {
-		this.postid = postid;
 	}
 
 	public String getPosttext() {

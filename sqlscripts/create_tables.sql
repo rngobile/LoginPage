@@ -14,3 +14,6 @@ create table bhpost (
   bhuserid number default null
 );
 
+alter table bhuser add constraint bhuser_pk primary key (bhuserid);
+alter table bhpost add constraint bhpost_pk primary key (postid);
+alter table bhpost add constraint bhpost_fk foreign key (bhuserid) references  bhuser (bhuserid);
