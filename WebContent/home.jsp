@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ page import="com.servlet.hello.User"%>
+<!-- <%@ page import="com.servlet.hello.User"%> -->
+<%@ page import = "model.Bhuser" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -17,15 +18,18 @@
 
 	<!-- This is where we assigned from session -->
 	<%
-		User u = (User) session.getAttribute("user");
+		Bhuser u = (Bhuser) session.getAttribute("user");
 	%>
-
+	
 	<h1>
 		Hello
-		<%=u.getUserName()%>!
+		<%=u.getUsername()%>!
 	</h1>
 	Your email address is:
-	<%=u.getEmail()%>
+	<%=u.getUseremail()%>
+	<br>
+	Your userid is:
+	<%=u.getBhuserid()%>
 	<br>
 <!-- Manual buttons to navigate pages 
 	<form action="newsfeed.jsp">

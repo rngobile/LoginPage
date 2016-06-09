@@ -1,7 +1,12 @@
 package com.servlet.hello;
+/*
+ * the login servlet processes login.jsp. The servlet has one job
+ * which is to validate the user and add them to the session so
+ * that user will be available to all pages. If the user is not valid
+ * then the login servlet will redirect back to the login page.
+*/
 
 import java.io.IOException;
-import java.io.PrintWriter;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -10,69 +15,60 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-@WebServlet("/LoginServletPost")
+import customTools.DbUser;
+import model.Bhuser;
+
+@WebServlet("/LoginServlet")
 public class LoginServletPost extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-	public LoginServletPost() {
-		super();
-	}
+    public LoginServletPost() {
+        super();
+    }
 
-	protected void doPost(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-
-		String nextURL;
-
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		//this page does not require user to be logged in
+		String useremail = request.getParameter("email");
+		String userpassword = request.getParameter("password");
 		String action = request.getParameter("action");
-
-		// Grab Session and add to User Class
+		//String remember = request.getParameter("remember");
+		String nextURL = "/error.jsp";
+		
+		//get an instance of the session so we can set attributes to it
+		//the JSP and NavBar will read from the session 
+		//The session is one of the primary ways we maintain state
+		//in an otherwise stateless web application
 		HttpSession session = request.getSession();
-		User user = new User();
-
-		// Retrieve username, email from GET call
-		user.setUserName(request.getParameter("username"));
-		user.setEmail(request.getParameter("email"));
-
-		session.setAttribute("user", user);
-
-		String username = user.getUserName();
-		String email = user.getEmail();
-
-		if (action == null) {
-			action = "";
-		} else if (username == null || email == null) {
-			username = "";
-			email = "";
-		}
-
-		response.setContentType("text/html");
-
-		PrintWriter out = response.getWriter();
-		out.println(user.getUserName());
-
-		if (action.equals("logout")) {
+		
+		//create a variable to hold our user. The variable must be defined
+		//so it is visible to all code within the method. So define it here
+		//but set it to null since we don't have a user yet.
+		Bhuser user = null;
+		//create an instance of the user and put it in the session
+		//only add the user to the session if the user if valid.
+		//The presence of the user is used to determine who 
+		//owns the site and will be used to connect to the database
+		if (action.equals("logout")){
 			session.invalidate();
-			nextURL = "/login.html";
-		} else {
-			if (isValid(user.getUserName(), "password")) {
+			nextURL = "/login.jsp";
+			
+		}else{
+			user = DbUser.getUserByEmail(useremail);
+			if (DbUser.isValidUser(user)){
+				session.setAttribute("user", user);
+				int size = 30;
+				String gravatarURL = DbUser.getGravatarURL(useremail, size);
+				System.out.println(gravatarURL);
+				session.setAttribute("gravatarURL", gravatarURL);
 				nextURL = "/home.jsp";
-				request.setAttribute("username", username);
-				request.setAttribute("email", email);
-			} else {
-				nextURL = "/error.html";
+			}else{
+				nextURL = "/login.jsp";
 			}
+			
 		}
-		request.getRequestDispatcher(nextURL).forward(request, response);
-		//show url path
-		//response.sendRedirect(request.getContextPath() + nextURL);
-	}
-
-	boolean isValid(String username, String password) {
-		if (username.equals("richard") && password.equals("password")) {
-			return true;
-		} else {
-			return true; //false;
-		}
+		//redirect to next page as indicated by the value of the nextURL variable
+		//getServletContext().getRequestDispatcher(nextURL).forward(request,response);
+		response.sendRedirect(request.getContextPath() + nextURL);
 	}
 
 }

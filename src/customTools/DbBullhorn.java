@@ -7,6 +7,7 @@ import javax.persistence.EntityTransaction;
 import javax.persistence.TypedQuery;
 
 import model.Bhpost;
+import customTools.DbUtil;
 
 public class DbBullhorn {
 
@@ -53,13 +54,13 @@ public class DbBullhorn {
 		}
 	}
 
-	public static List bhPost (){
+	public static List<Bhpost> bhPost (){
 		EntityManager em = DbUtil.getEmFactory().createEntityManager();
 		String qString = "select b from Bhpost b";
 		
-		List posts = null;
+		List<Bhpost> posts = null;
 		try{
-			TypedQuery query = em.createQuery(qString,Bhpost.class);
+			TypedQuery<Bhpost> query = em.createQuery(qString,Bhpost.class);
 			posts = query.getResultList();
 
 		}catch (Exception e){
@@ -71,14 +72,14 @@ public class DbBullhorn {
 		return posts;
 	}
 	
-	public static List postsofUser(int userid)
+	public static List<Bhpost> postsofUser(int userid)
 	{
 		EntityManager em = DbUtil.getEmFactory().createEntityManager();
-		List userposts = null;
+		List<Bhpost> userposts = null;
 		String qString = "select b from Bhpost b where b.bhuser.bhuserid = :userid";
 		
 		try{
-			TypedQuery query = em.createQuery(qString,Bhpost.class);
+			TypedQuery<Bhpost> query = em.createQuery(qString,Bhpost.class);
 			query.setParameter("userid", userid);
 			userposts = query.getResultList();
 		}catch (Exception e){
@@ -89,15 +90,15 @@ public class DbBullhorn {
 			}
 		return userposts;	
 	}
-	public static List postsofUser(String useremail)
+	public static List<Bhpost> postsofUser(String useremail)
 	{
 		EntityManager em = DbUtil.getEmFactory().createEntityManager();
-		List userposts = null;
+		List<Bhpost> userposts = null;
 		String qString = "select b from Bhpost b "
 				+ "where b.bhuser.useremail = :useremail";
 		
 		try{
-			TypedQuery query = em.createQuery(qString,Bhpost.class);
+			TypedQuery<Bhpost> query = em.createQuery(qString,Bhpost.class);
 			query.setParameter("useremail", useremail);
 			userposts = query.getResultList();
 		}catch (Exception e){
@@ -109,15 +110,15 @@ public class DbBullhorn {
 		return userposts;	
 	}
 	
-	public static List searchPosts (String search)
+	public static List<Bhpost> searchPosts (String search)
 	{
 		EntityManager em = DbUtil.getEmFactory().createEntityManager();
-		List searchposts = null;
+		List<Bhpost> searchposts = null;
 		String qString = "select b from Bhpost b "
 				+ "where b.posttext like :search";
 		
 		try{
-			TypedQuery query = em.createQuery(qString,Bhpost.class);
+			TypedQuery<Bhpost> query = em.createQuery(qString,Bhpost.class);
 			query.setParameter("search", "%" + search + "%");
 			searchposts = query.getResultList();
 		}catch (Exception e){
