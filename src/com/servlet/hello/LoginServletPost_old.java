@@ -13,7 +13,7 @@ import javax.servlet.http.HttpSession;
 import customTools.DbUser;
 import model.Bhuser;
 
-@WebServlet("/LoginServletPost")
+@WebServlet("/LoginServletPost_old")
 public class LoginServletPost_old extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 

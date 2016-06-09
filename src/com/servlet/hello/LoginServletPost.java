@@ -18,7 +18,7 @@ import javax.servlet.http.HttpSession;
 import customTools.DbUser;
 import model.Bhuser;
 
-@WebServlet("/LoginServlet")
+@WebServlet("/LoginServletPost")
 public class LoginServletPost extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -32,7 +32,7 @@ public class LoginServletPost extends HttpServlet {
 		String userpassword = request.getParameter("password");
 		String action = request.getParameter("action");
 		//String remember = request.getParameter("remember");
-		String nextURL = "/error.jsp";
+		String nextURL = "/error.html";
 		
 		//get an instance of the session so we can set attributes to it
 		//the JSP and NavBar will read from the session 
@@ -48,10 +48,13 @@ public class LoginServletPost extends HttpServlet {
 		//only add the user to the session if the user if valid.
 		//The presence of the user is used to determine who 
 		//owns the site and will be used to connect to the database
+		if(action == null){
+			action = "";
+		}
+		
 		if (action.equals("logout")){
 			session.invalidate();
 			nextURL = "/login.jsp";
-			
 		}else{
 			user = DbUser.getUserByEmail(useremail);
 			if (DbUser.isValidUser(user)){
