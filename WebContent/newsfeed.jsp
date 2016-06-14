@@ -24,7 +24,7 @@
   </head>
   <body>
 
-	<h1>This is the newsfeed page</h1>
+	<h1>This is the newsfeed page</h1> <%=request.getParameter("userid") %>
 
 	<div class="container">
 		<table class="table table-bordered">

@@ -30,6 +30,9 @@
 	<br>
 	Your userid is:
 	<%=u.getBhuserid()%>
+	<% request.setAttribute("userid", u.getBhuserid() ); %>
+	<br>
+	<%= request.getAttribute("userid") %>
 	<br>
 <!-- Manual buttons to navigate pages 
 	<form action="newsfeed.jsp">

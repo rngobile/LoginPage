@@ -1,4 +1,9 @@
+<%@page import="util.MD5Util"%>
+<%@ page import = "model.Bhuser" %>
 <!-- start navbar -->
+<%	Bhuser u = (Bhuser) session.getAttribute("user");	%>
+<%  session.setAttribute("userid", u.getBhuserid()); %>
+
 
 <nav class="navbar navbar-default">
  <div class="container-fluid">
@@ -18,10 +23,10 @@
 
  <ul class="nav navbar-nav">
  <li class="active"><a href="home.jsp">Home<span class="sr-only">(current)</span></a></li>
- <li><a href="NewsfeedServlet">News Feed</a></li> 
+ <li><a href="NewsfeedServlet?userid=<%= u.getBhuserid() %>">News Feed</a></li> 
  </ul>
 
- <form class="navbar-form navbar-right" role="search" action="Newsfeed" method="get">
+ <form class="navbar-form navbar-right" role="search" action="NewsfeedServlet" method="get">
  <div class="form-group">
  <input type="text" class="form-control" placeholder="Search" name="searchtext">
  </div>

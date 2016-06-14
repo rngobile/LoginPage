@@ -90,8 +90,13 @@ public class DbUser {
 			+ "where b.useremail = :useremail and b.userpassword = :userpass";
 		TypedQuery q = em.createQuery(qString,Long.class);
 		boolean result = false;
+		
+		try {
 		q.setParameter("useremail", user.getUseremail());
 		q.setParameter("userpass", user.getUserpassword());
+		} catch (Exception e) {
+			result = false;
+		}
 		
 		try{
 			long CountOfUserId = (long) q.getSingleResult();
